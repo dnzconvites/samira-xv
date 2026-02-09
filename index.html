@@ -16,6 +16,7 @@ justify-content:center;
 align-items:center;
 height:100vh;
 overflow:hidden;
+font-family:sans-serif;
 }
 
 .story{
@@ -64,16 +65,20 @@ background-image:url('convite.jpg');
 position:absolute;
 bottom:22%;
 width:100%;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+padding:15px;
+}
+
+.botao{
 display:flex;
 justify-content:center;
-gap:12px;
-flex-wrap:wrap;
 }
 
 .botao img{
-width:20vw;
-max-width:110px;
-min-width:75px;
+width:100%;
+max-width:140px;
 }
 
 /* BOTAO VOLTAR */
@@ -96,13 +101,13 @@ font-size:14px;
 <div class="story">
 
 <div id="intro">
-<video id="videoIntro" autoplay muted playsinline>
-<source src="video.mp4">
+<video id="videoIntro" autoplay muted playsinline webkit-playsinline>
+<source src="video.mp4" type="video/mp4">
 </video>
 </div>
 
 <audio id="musica" loop>
-<source src="musica.mp3">
+<source src="musica.mp3" type="audio/mp3">
 </audio>
 
 <!-- TELA PRINCIPAL -->
@@ -145,33 +150,53 @@ font-size:14px;
 <script>
 
 let musica=document.getElementById("musica");
+let video=document.getElementById("videoIntro");
+let musicaIniciada=false;
 
-// FINAL VIDEO
-document.getElementById("videoIntro").onended=function(){
+function iniciarAudio(){
+
+if(!musicaIniciada){
+
+musica.currentTime=0;
+musica.volume=1;
+musica.play().catch(()=>{});
+
+video.muted=false;
+
+musicaIniciada=true;
+
+}
+
+}
+
+document.addEventListener("click",iniciarAudio,{once:true});
+document.addEventListener("touchstart",iniciarAudio,{once:true});
+
+video.onended=function(){
 document.getElementById("intro").style.display="none";
 document.getElementById("convite").style.display="block";
 }
 
-// ATIVAR MUSICA IOS
-document.addEventListener("click",function(){
-if(musica.paused){
-musica.play().catch(()=>{});
-}
-},{once:true});
-
-// TROCAR TELAS
 function abrirTela(id){
-document.getElementById("convite").style.display="none";
-document.getElementById(id).style.display="block";
+
+document.querySelectorAll('.tela').forEach(t=>{
+t.style.display='none';
+});
+
+document.getElementById(id).style.display='block';
+
 }
 
 function voltar(){
-document.getElementById("dress").style.display="none";
-document.getElementById("presente").style.display="none";
-document.getElementById("convite").style.display="block";
+
+document.querySelectorAll('.tela').forEach(t=>{
+t.style.display='none';
+});
+
+document.getElementById('convite').style.display='block';
+
 }
 
-// LINKS EXTERNOS
 function confirmar(){
 window.open("https://wa.me/5599999999999","_blank");
 }
