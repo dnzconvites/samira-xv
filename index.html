@@ -2,184 +2,115 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Samira XV</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convite</title>
 
 <style>
-
 *{margin:0;padding:0;box-sizing:border-box;}
+body{background:#000;font-family:Arial;}
 
-body{
-background:black;
+#capa{
+position:fixed;
+inset:0;
+background:#000;
 display:flex;
 justify-content:center;
 align-items:center;
-height:100vh;
-overflow:hidden;
-}
-
-.story{
-position:relative;
-width:100%;
-max-width:420px;
-height:100vh;
-overflow:hidden;
-background:black;
-}
-
-/* VIDEO */
-#intro{
-position:absolute;
-width:100%;
-height:100%;
 z-index:10;
 }
 
-#intro video{
+#capa img{
 width:100%;
 height:100%;
-object-fit:cover;
+object-fit:contain;
 }
 
-/* TELAS */
-.tela{
+#abrir{
 position:absolute;
-width:100%;
-height:100%;
-display:none;
-background-size:cover;
-background-position:center;
+inset:0;
+background:transparent;
+border:0;
 }
 
-#convite{
-display:none;
-background-image:url('convite.jpg');
-}
-
-#dress{background-image:url('dresscode.jpg');}
-#presente{background-image:url('presentes.jpg');}
-
-/* BOTOES PRINCIPAIS */
-.botoes{
-position:absolute;
-bottom:22%;
-width:100%;
+.main{
+min-height:100vh;
 display:flex;
 justify-content:center;
-gap:12px;
-flex-wrap:wrap;
+align-items:center;
 }
 
-.botao img{
-width:20vw;
-max-width:110px;
-min-width:75px;
+.stage{
+position:relative;
+width:min(100vw,56.25vh);
+height:min(100vh,177.78vw);
+max-width:480px;
+max-height:853px;
+background:#000;
+overflow:hidden;
 }
 
-/* BOTAO VOLTAR */
-.voltar{
+video{
+width:100%;
+height:100%;
+object-fit:contain;
+}
+
+#botoes a{
 position:absolute;
-top:20px;
-left:15px;
-background:rgba(0,0,0,0.6);
-color:white;
-padding:8px 12px;
-border-radius:8px;
-font-size:14px;
+width:20%;
+height:12%;
+transform:translate(-50%,-50%);
 }
 
+/* posições originais */
+#filtro{top:47.92%;left:83.33%;}
+#dress{top:63.54%;left:83.33%;}
+#sugestoes{top:85.42%;left:83.33%;}
+#local{top:81.25%;left:19%;}
+#presenca{top:81.25%;left:51.85%;}
 </style>
 </head>
 
 <body>
 
-<div class="story">
+<div id="capa">
+<img src="capa.png">
+<button id="abrir"></button>
+</div>
 
-<div id="intro">
-<video id="videoIntro" autoplay muted playsinline>
-<source src="video.mp4">
+<div class="main">
+<div class="stage">
+
+<video id="video" playsinline muted>
+<source src="video.mp4" type="video/mp4">
 </video>
+
+<div id="botoes">
+<a id="filtro" href="#"></a>
+<a id="dress" href="#"></a>
+<a id="local" href="https://maps.google.com" target="_blank"></a>
+<a id="presenca" href="https://wa.me/5511989957305" target="_blank"></a>
+<a id="sugestoes" href="https://canva.com" target="_blank"></a>
+</div>
+
+</div>
 </div>
 
 <audio id="musica" loop>
 <source src="musica.mp3">
 </audio>
 
-<!-- TELA PRINCIPAL -->
-<div id="convite" class="tela">
-
-<div class="botoes">
-
-<div class="botao" onclick="confirmar()">
-<img src="botao-confirmar.png">
-</div>
-
-<div class="botao" onclick="localizacao()">
-<img src="botao-local.png">
-</div>
-
-<div class="botao" onclick="abrirTela('dress')">
-<img src="botao-dress.png">
-</div>
-
-<div class="botao" onclick="abrirTela('presente')">
-<img src="botao-presente.png">
-</div>
-
-</div>
-
-</div>
-
-<!-- TELA DRESS -->
-<div id="dress" class="tela">
-<div class="voltar" onclick="voltar()">← Voltar</div>
-</div>
-
-<!-- TELA PRESENTE -->
-<div id="presente" class="tela">
-<div class="voltar" onclick="voltar()">← Voltar</div>
-</div>
-
-</div>
-
 <script>
+const abrir=document.getElementById("abrir");
+const capa=document.getElementById("capa");
+const video=document.getElementById("video");
+const musica=document.getElementById("musica");
 
-let musica=document.getElementById("musica");
-
-// FINAL VIDEO
-document.getElementById("videoIntro").onended=function(){
-document.getElementById("intro").style.display="none";
-document.getElementById("convite").style.display="block";
-}
-
-// ATIVAR MUSICA IOS
-document.addEventListener("click",function(){
-if(musica.paused){
+abrir.onclick=async()=>{
+capa.style.display="none";
+video.play();
 musica.play().catch(()=>{});
-}
-},{once:true});
-
-// TROCAR TELAS
-function abrirTela(id){
-document.getElementById("convite").style.display="none";
-document.getElementById(id).style.display="block";
-}
-
-function voltar(){
-document.getElementById("dress").style.display="none";
-document.getElementById("presente").style.display="none";
-document.getElementById("convite").style.display="block";
-}
-
-// LINKS EXTERNOS
-function confirmar(){
-window.open("https://wa.me/5511989957305","_blank");
-}
-
-function localizacao(){
-window.open("https://maps.app.goo.gl/seulink","_blank");
-}
-
+};
 </script>
 
 </body>
