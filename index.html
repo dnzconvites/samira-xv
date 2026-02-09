@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Convite XV Samira</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:#000;
+font-family:sans-serif;
+overflow:hidden;
+}
+
+/* VIDEO INTRO */
+#intro{
+position:fixed;
+width:100%;
+height:100%;
+top:0;
+left:0;
+z-index:10;
+background:black;
+}
+
+#intro video{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* CONVITE */
+#convite{
+display:none;
+position:relative;
+width:100%;
+height:100vh;
+background:url('convite.jpg') center/cover no-repeat;
+}
+
+/* AREA BOTOES */
+.botoes{
+position:absolute;
+bottom:18%;
+width:100%;
+display:flex;
+justify-content:center;
+gap:18px;
+flex-wrap:wrap;
+padding:10px;
+}
+
+.botao img{
+width:22vw;
+max-width:130px;
+min-width:80px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.botao img:active{
+transform:scale(0.9);
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- INTRO VIDEO -->
+<div id="intro">
+<video id="videoIntro" autoplay muted playsinline webkit-playsinline>
+<source src="video.mp4" type="video/mp4">
+</video>
+</div>
+
+<!-- MUSICA -->
+<audio id="musica" loop>
+<source src="musica.mp3" type="audio/mp3">
+</audio>
+
+<!-- CONVITE -->
+<div id="convite">
+
+<div class="botoes">
+
+<div class="botao" onclick="confirmar()">
+<img src="botao-confirmar.png">
+</div>
+
+<div class="botao" onclick="localizacao()">
+<img src="botao-local.png">
+</div>
+
+<div class="botao" onclick="dress()">
+<img src="botao-dress.png">
+</div>
+
+<div class="botao" onclick="presente()">
+<img src="botao-presente.png">
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let musica = document.getElementById("musica");
+
+// FINAL DO VIDEO
+document.getElementById("videoIntro").onended=function(){
+
+document.getElementById("intro").style.display="none";
+document.getElementById("convite").style.display="block";
+
+}
+
+// ATIVAR MUSICA EM QUALQUER TOQUE (IOS SAFE)
+document.addEventListener("click",function(){
+if(musica.paused){
+musica.play().catch(()=>{});
+}
+},{once:true});
+
+// FUNCOES BOTOES
+
+function confirmar(){
+window.open("https://wa.me/5599999999999","_blank");
+}
+
+function localizacao(){
+window.open("https://maps.app.goo.gl/seulink","_blank");
+}
+
+function dress(){
+window.open("dresscode.jpg","_blank");
+}
+
+function presente(){
+window.open("presentes.jpg","_blank");
+}
+
+</script>
+
+</body>
+</html>
