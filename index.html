@@ -2,94 +2,147 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
 <title>Convite</title>
 
 <style>
 body{
 margin:0;
-background:#0b1e3a;
-font-family:Arial, sans-serif;
-color:white;
-text-align:center;
+background:black;
+font-family:sans-serif;
+overflow:hidden;
 }
 
-.container{
-padding:20px;
+.tela{
+position:absolute;
+width:100%;
+height:100%;
+top:0;
+left:0;
+display:none;
+}
+
+.ativa{
+display:block;
 }
 
 video{
-width:90%;
-max-width:520px;
-border-radius:15px;
-cursor:pointer;
+width:100%;
+height:100%;
+object-fit:cover;
 }
 
 .botoes{
+position:absolute;
+bottom:20%;
+width:100%;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:12px;
+}
+
+.linha{
 display:flex;
 justify-content:center;
-gap:10px;
-margin-top:20px;
+gap:12px;
+width:100%;
 }
 
-.botoes button{
-flex:1;
-max-width:150px;
-padding:12px;
-border:none;
+.botao{
+background:rgba(255,255,255,0.1);
+padding:14px;
+border-radius:14px;
+color:white;
+text-decoration:none;
+font-size:14px;
+width:40%;
+text-align:center;
+backdrop-filter:blur(6px);
+}
+
+.voltar{
+position:absolute;
+top:20px;
+left:20px;
+background:rgba(0,0,0,0.5);
+padding:10px 14px;
 border-radius:10px;
-background:#d4af37;
-color:black;
-font-weight:bold;
-cursor:pointer;
-}
-
-.botoes button:hover{
-transform:scale(1.05);
+color:white;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-
-<h3>Clique para abrir</h3>
-
-<video id="videoConvite">
-<source src="video.mp4" type="video/mp4">
-</video>
-
+<!-- MUSICA GLOBAL -->
 <audio id="musica" loop>
 <source src="musica.mp3" type="audio/mpeg">
 </audio>
 
-<p>Clique nos botões</p>
+<!-- HOME -->
+<div id="home" class="tela ativa">
+
+<video id="videoConvite" playsinline>
+<source src="video.mp4" type="video/mp4">
+</video>
 
 <div class="botoes">
-<button>Confirmar</button>
-<button>Localização</button>
-<button>Presentes</button>
-<button>Contato</button>
+
+<div class="linha">
+<a class="botao" onclick="abrir('confirmacao')">Confirmação</a>
+<a class="botao" onclick="abrir('localizacao')">Localização</a>
 </div>
 
+<div class="linha">
+<a class="botao" onclick="abrir('dress')">Dress Code</a>
+<a class="botao" onclick="abrir('presente')">Sugestão</a>
+</div>
+
+</div>
+
+</div>
+
+<!-- TELAS INTERNAS -->
+
+<div id="confirmacao" class="tela">
+<a class="voltar" onclick="abrir('home')">← Voltar</a>
+</div>
+
+<div id="localizacao" class="tela">
+<a class="voltar" onclick="abrir('home')">← Voltar</a>
+</div>
+
+<div id="dress" class="tela">
+<a class="voltar" onclick="abrir('home')">← Voltar</a>
+</div>
+
+<div id="presente" class="tela">
+<a class="voltar" onclick="abrir('home')">← Voltar</a>
 </div>
 
 <script>
 const video = document.getElementById("videoConvite");
 const musica = document.getElementById("musica");
 
-video.addEventListener("click", function(){
+let musicaIniciada=false;
 
-if(musica.paused){
+function iniciar(){
+if(!musicaIniciada){
 musica.play().catch(()=>{});
+musicaIniciada=true;
+}
+video.play().catch(()=>{});
 }
 
-if(video.paused){
-video.play();
-}
+video.addEventListener("click", iniciar);
+document.addEventListener("touchstart", iniciar, { once:true });
 
-});
+function abrir(id){
+document.querySelectorAll(".tela").forEach(t=>t.classList.remove("ativa"));
+document.getElementById(id).classList.add("ativa");
+}
 </script>
 
 </body>
