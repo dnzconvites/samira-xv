@@ -2,32 +2,37 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Convite XV Samira</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Convite XV</title>
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-background:#000;
-font-family:sans-serif;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 overflow:hidden;
 }
 
-/* VIDEO INTRO */
+.story{
+position:relative;
+width:100%;
+max-width:420px;
+height:100vh;
+overflow:hidden;
+background:black;
+}
+
+/* VIDEO */
 #intro{
-position:fixed;
+position:absolute;
 width:100%;
 height:100%;
-top:0;
-left:0;
 z-index:10;
-background:black;
 }
 
 #intro video{
@@ -36,37 +41,51 @@ height:100%;
 object-fit:cover;
 }
 
-/* CONVITE */
-#convite{
-display:none;
-position:relative;
+/* TELAS */
+.tela{
+position:absolute;
 width:100%;
-height:100vh;
-background:url('convite.jpg') center/cover no-repeat;
+height:100%;
+display:none;
+background-size:cover;
+background-position:center;
 }
 
-/* AREA BOTOES */
+#convite{
+display:none;
+background-image:url('convite.jpg');
+}
+
+#dress{background-image:url('dresscode.jpg');}
+#presente{background-image:url('presentes.jpg');}
+
+/* BOTOES PRINCIPAIS */
 .botoes{
 position:absolute;
-bottom:18%;
+bottom:22%;
 width:100%;
 display:flex;
 justify-content:center;
-gap:18px;
+gap:12px;
 flex-wrap:wrap;
-padding:10px;
 }
 
 .botao img{
-width:22vw;
-max-width:130px;
-min-width:80px;
-cursor:pointer;
-transition:0.3s;
+width:20vw;
+max-width:110px;
+min-width:75px;
 }
 
-.botao img:active{
-transform:scale(0.9);
+/* BOTAO VOLTAR */
+.voltar{
+position:absolute;
+top:20px;
+left:15px;
+background:rgba(0,0,0,0.6);
+color:white;
+padding:8px 12px;
+border-radius:8px;
+font-size:14px;
 }
 
 </style>
@@ -74,20 +93,20 @@ transform:scale(0.9);
 
 <body>
 
-<!-- INTRO VIDEO -->
+<div class="story">
+
 <div id="intro">
-<video id="videoIntro" autoplay muted playsinline webkit-playsinline>
-<source src="video.mp4" type="video/mp4">
+<video id="videoIntro" autoplay muted playsinline>
+<source src="video.mp4">
 </video>
 </div>
 
-<!-- MUSICA -->
 <audio id="musica" loop>
-<source src="musica.mp3" type="audio/mp3">
+<source src="musica.mp3">
 </audio>
 
-<!-- CONVITE -->
-<div id="convite">
+<!-- TELA PRINCIPAL -->
+<div id="convite" class="tela">
 
 <div class="botoes">
 
@@ -99,11 +118,11 @@ transform:scale(0.9);
 <img src="botao-local.png">
 </div>
 
-<div class="botao" onclick="dress()">
+<div class="botao" onclick="abrirTela('dress')">
 <img src="botao-dress.png">
 </div>
 
-<div class="botao" onclick="presente()">
+<div class="botao" onclick="abrirTela('presente')">
 <img src="botao-presente.png">
 </div>
 
@@ -111,41 +130,54 @@ transform:scale(0.9);
 
 </div>
 
+<!-- TELA DRESS -->
+<div id="dress" class="tela">
+<div class="voltar" onclick="voltar()">← Voltar</div>
+</div>
+
+<!-- TELA PRESENTE -->
+<div id="presente" class="tela">
+<div class="voltar" onclick="voltar()">← Voltar</div>
+</div>
+
+</div>
+
 <script>
 
-let musica = document.getElementById("musica");
+let musica=document.getElementById("musica");
 
-// FINAL DO VIDEO
+// FINAL VIDEO
 document.getElementById("videoIntro").onended=function(){
-
 document.getElementById("intro").style.display="none";
 document.getElementById("convite").style.display="block";
-
 }
 
-// ATIVAR MUSICA EM QUALQUER TOQUE (IOS SAFE)
+// ATIVAR MUSICA IOS
 document.addEventListener("click",function(){
 if(musica.paused){
 musica.play().catch(()=>{});
 }
 },{once:true});
 
-// FUNCOES BOTOES
+// TROCAR TELAS
+function abrirTela(id){
+document.getElementById("convite").style.display="none";
+document.getElementById(id).style.display="block";
+}
 
+function voltar(){
+document.getElementById("dress").style.display="none";
+document.getElementById("presente").style.display="none";
+document.getElementById("convite").style.display="block";
+}
+
+// LINKS EXTERNOS
 function confirmar(){
 window.open("https://wa.me/5599999999999","_blank");
 }
 
 function localizacao(){
 window.open("https://maps.app.goo.gl/seulink","_blank");
-}
-
-function dress(){
-window.open("dresscode.jpg","_blank");
-}
-
-function presente(){
-window.open("presentes.jpg","_blank");
 }
 
 </script>
