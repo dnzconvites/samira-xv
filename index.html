@@ -2,209 +2,94 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Convite XV</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convite</title>
 
 <style>
-
-*{margin:0;padding:0;box-sizing:border-box;}
-
 body{
-background:black;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-overflow:hidden;
-font-family:sans-serif;
-}
-
-.story{
-position:relative;
-width:100%;
-max-width:420px;
-height:100vh;
-overflow:hidden;
-background:black;
-}
-
-/* VIDEO */
-#intro{
-position:absolute;
-width:100%;
-height:100%;
-z-index:10;
-}
-
-#intro video{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-/* TELAS */
-.tela{
-position:absolute;
-width:100%;
-height:100%;
-display:none;
-background-size:cover;
-background-position:center;
-}
-
-#convite{
-display:none;
-background-image:url('convite.jpg');
-}
-
-#dress{background-image:url('dresscode.jpg');}
-#presente{background-image:url('presentes.jpg');}
-
-/* BOTOES PRINCIPAIS */
-.botoes{
-position:absolute;
-bottom:28%;
-width:100%;
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px;
-padding:15px;
-}
-
-.botao{
-display:flex;
-justify-content:center;
-}
-
-.botao img{
-width:100%;
-max-width:110px;
-}
-
-/* BOTAO VOLTAR */
-.voltar{
-position:absolute;
-top:20px;
-left:15px;
-background:rgba(0,0,0,0.6);
+margin:0;
+background:#0b1e3a;
+font-family:Arial, sans-serif;
 color:white;
-padding:8px 12px;
-border-radius:8px;
-font-size:14px;
+text-align:center;
 }
 
+.container{
+padding:20px;
+}
+
+video{
+width:90%;
+max-width:520px;
+border-radius:15px;
+cursor:pointer;
+}
+
+.botoes{
+display:flex;
+justify-content:center;
+gap:10px;
+margin-top:20px;
+}
+
+.botoes button{
+flex:1;
+max-width:150px;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#d4af37;
+color:black;
+font-weight:bold;
+cursor:pointer;
+}
+
+.botoes button:hover{
+transform:scale(1.05);
+}
 </style>
 </head>
 
 <body>
 
-<div class="story">
+<div class="container">
 
-<div id="intro">
-<video id="videoIntro" autoplay muted playsinline webkit-playsinline>
+<h3>Clique para abrir</h3>
+
+<video id="videoConvite">
 <source src="video.mp4" type="video/mp4">
 </video>
-</div>
 
 <audio id="musica" loop>
-<source src="musica.mp3" type="audio/mp3">
+<source src="musica.mp3" type="audio/mpeg">
 </audio>
 
-<!-- TELA PRINCIPAL -->
-<div id="convite" class="tela">
+<p>Clique nos botões</p>
 
 <div class="botoes">
-
-<div class="botao" onclick="confirmar()">
-<img src="botao-confirmar.png">
-</div>
-
-<div class="botao" onclick="localizacao()">
-<img src="botao-local.png">
-</div>
-
-<div class="botao" onclick="abrirTela('dress')">
-<img src="botao-dress.png">
-</div>
-
-<div class="botao" onclick="abrirTela('presente')">
-<img src="botao-presente.png">
-</div>
-
-</div>
-
-</div>
-
-<!-- TELA DRESS -->
-<div id="dress" class="tela">
-<div class="voltar" onclick="voltar()">← Voltar</div>
-</div>
-
-<!-- TELA PRESENTE -->
-<div id="presente" class="tela">
-<div class="voltar" onclick="voltar()">← Voltar</div>
+<button>Confirmar</button>
+<button>Localização</button>
+<button>Presentes</button>
+<button>Contato</button>
 </div>
 
 </div>
 
 <script>
+const video = document.getElementById("videoConvite");
+const musica = document.getElementById("musica");
 
-let musica=document.getElementById("musica");
-let video=document.getElementById("videoIntro");
-let musicaIniciada=false;
+video.addEventListener("click", function(){
 
-function iniciarAudio(){
-
-if(!musicaIniciada){
-
-musica.currentTime=0;
-musica.volume=1;
+if(musica.paused){
 musica.play().catch(()=>{});
-
-video.muted=false;
-
-musicaIniciada=true;
-
 }
 
+if(video.paused){
+video.play();
 }
 
-document.addEventListener("click",iniciarAudio,{once:true});
-document.addEventListener("touchstart",iniciarAudio,{once:true});
-
-video.onended=function(){
-document.getElementById("intro").style.display="none";
-document.getElementById("convite").style.display="block";
-}
-
-function abrirTela(id){
-
-document.querySelectorAll('.tela').forEach(t=>{
-t.style.display='none';
 });
-
-document.getElementById(id).style.display='block';
-
-}
-
-function voltar(){
-
-document.querySelectorAll('.tela').forEach(t=>{
-t.style.display='none';
-});
-
-document.getElementById('convite').style.display='block';
-
-}
-
-function confirmar(){
-window.open("https://wa.me/5599999999999","_blank");
-}
-
-function localizacao(){
-window.open("https://maps.app.goo.gl/seulink","_blank");
-}
-
 </script>
 
 </body>
